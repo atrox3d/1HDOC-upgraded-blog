@@ -28,13 +28,17 @@ def call_api(url, params=None):
 def gest_posts(url, params=None):
     data = call_api(url, params)
     posts = [BlogPost(**item) for item in data]
+    logger.info(f"posts total: {len(posts)}")
     return posts
 
 
 def get_post(id, url, params=None):
     for post in gest_posts(url, params):
         if post.id == id:
+            logger.info(f"found post {post}")
             return post
+    logger.error(f"post with id {id} not found")
+    logger.error(f"return None")
     return None
 
 
