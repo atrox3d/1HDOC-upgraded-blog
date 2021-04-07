@@ -5,8 +5,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s | %(levelname)-8s | %(name)-15s | %(funcName)15s() | %(message)s'
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)-8s | %(name)-15s | %(funcName)15s() | %(message)s'
 )
 
 app = Flask(__name__)
@@ -16,6 +16,12 @@ app = Flask(__name__)
 def home():
     logger.info('return render_template("index.html", all_posts=api.gest_posts(api.URL))')
     return render_template("index.html", all_posts=api.gest_posts(api.URL))
+
+
+@app.route("/post/<int:id>")
+def post(id):
+    post = api.get_post(id, api.URL)
+    return render_template("post.html", post=post)
 
 
 @app.route("/about")
